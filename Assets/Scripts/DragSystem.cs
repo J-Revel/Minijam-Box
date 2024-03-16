@@ -7,6 +7,8 @@ using UnityEngine.EventSystems;
 public class DragSystem : MonoBehaviour
 {
     public static DragSystem instance;
+    public System.Action<Draggable> drag_start_delegate;
+    public System.Action<Draggable> drag_end_delegate;
 
     private void Awake()
     {
@@ -56,6 +58,7 @@ public class DragSystem : MonoBehaviour
         {
             hovered_draggable.dragged = true;
             dragging = true;
+            drag_start_delegate?.Invoke(hovered_draggable);
         }
         else if(dragging && !Input.GetMouseButton(0))
         {
@@ -63,6 +66,7 @@ public class DragSystem : MonoBehaviour
             {
                 hovered_slot.dragged_element_delegate?.Invoke(hovered_draggable);
             }
+            drag_end_delegate?.Invoke(hovered_draggable);
             dragging = false;
             hovered_draggable.rigidbody.useGravity = true;
         }

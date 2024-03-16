@@ -8,7 +8,7 @@ public class MachineRoot : MonoBehaviour
     public System.Action yield_delegate;
     public System.Action<ResourceConfig> reject_delegate;
     public MachineRecipeConfig config;
-    private int[] stocks;
+    public int[] stocks;
     public float production_duration = 1;
 
 
@@ -18,6 +18,21 @@ public class MachineRoot : MonoBehaviour
         stocks = new int[config.inputs.Length];
     }
 
+    public bool DoesAcceptResource(ResourceConfig resource)
+    {
+        for(int i=0; i<config.inputs.Length; i++)
+        {
+            if (config.inputs[i].resource == resource)
+            {
+                if (1 > stocks[i])
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     private void OnResourceReceived(ResourceConfig resource)
     {
         bool stock_found = false;
@@ -25,7 +40,7 @@ public class MachineRoot : MonoBehaviour
         {
             if (config.inputs[i].resource == resource)
             {
-                if (config.inputs[i].count > stocks[i])
+                if (1 > stocks[i])
                 {
                     stocks[i]++;
                     stock_found = true;
@@ -41,7 +56,7 @@ public class MachineRoot : MonoBehaviour
         {
             for (int i = 0; i < stocks.Length; i++)
             {
-                if (config.inputs[i].count != stocks[i])
+                if (1 != stocks[i])
                 {
                     return;
                 }
@@ -58,7 +73,7 @@ public class MachineRoot : MonoBehaviour
         }
         for(int i=0; i<stocks.Length; i++)
         {
-            stocks[i] -= config.inputs[i].count;
+            stocks[i] -= 1;
         }
         yield_delegate?.Invoke();
     }

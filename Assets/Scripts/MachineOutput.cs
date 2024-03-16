@@ -5,9 +5,11 @@ using UnityEngine;
 public class MachineOutput : MonoBehaviour
 {
     public ResourceConfig resource;
-    public Vector3 initial_velocity = Vector3.forward * 10;
+    public Transform target_position;
+    public float appear_duration;
     public bool register_rejection;
     public bool register_yield;
+    
 
     private void Start()
     {
@@ -20,13 +22,21 @@ public class MachineOutput : MonoBehaviour
 
     public void OnYield()
     {
-        Transform instance = Instantiate(resource.prefab, transform.position, transform.rotation);
-        instance.GetComponent<Rigidbody>().velocity = transform.right * initial_velocity.x + transform.up * initial_velocity.y + transform.forward * initial_velocity.z;
+        StartCoroutine(YieldAnimationCoroutine());
     }
 
     public void OnReject(ResourceConfig resource)
     {
-        Transform instance = Instantiate(resource.prefab, transform.position, transform.rotation);
-        instance.GetComponent<Rigidbody>().velocity = transform.right * initial_velocity.x + transform.up * initial_velocity.y + transform.forward * initial_velocity.z;
+    }
+
+    private IEnumerator YieldAnimationCoroutine()
+    {
+        Transform instance = Instantiate(resource.prefab, transform.position, Quaternion.identity);
+        for(float time=0; time < appear_duration; time += Time.deltaTime)
+        {
+            instance.transform.position = Vector3.Lerp(transform.position, target_position.position, time / appear_duration);
+            yield return null;
+        }
+
     }
 }
