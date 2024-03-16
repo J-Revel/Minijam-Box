@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 1471932393629190063}
   - component: {fileID: 4296869709672045771}
   - component: {fileID: 5612902352885082911}
-  - component: {fileID: 2404031160803917950}
   - component: {fileID: 7887811803056004649}
+  - component: {fileID: 7836393549899236148}
   m_Layer: 0
   m_Name: Refined Metal Resource
   m_TagString: Untagged
@@ -135,49 +135,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &2404031160803917950
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5019505614510065813}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b467c57740a8f94c887eaf54908f2fc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mouseOverColor: {r: 0.41902542, g: 0, b: 1, a: 1}
-  originalColor: {r: 1, g: 0.50708187, b: 0.015686274, a: 1}
-  UILayer: 5
-  target_height: -4
-  attraction_strength: 50
-  attraction_curve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: -0.0020332336
-      value: 0.5007324
-      inSlope: 2.3221898
-      outSlope: 2.3221898
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.028455285
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  attraction_curve_bounds: {x: 0, y: 5}
-  damping: 0.9
 --- !u!114 &7887811803056004649
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -191,3 +148,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resource: {fileID: 11400000, guid: 7f9d638f3933c864691ea14d423ff6c3, type: 2}
+--- !u!114 &7836393549899236148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5019505614510065813}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee23a44e1954eec4899aebf341631043, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mouseOverColor: {r: 0, g: 0, b: 1, a: 1}
+  originalColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  rigidbody: {fileID: 0}
+  hovered: 0
+  highlighted: 0
+  dragged: 0

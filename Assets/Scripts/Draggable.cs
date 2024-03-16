@@ -9,65 +9,38 @@ public class Draggable : MonoBehaviour
     public Color mouseOverColor = Color.blue;
     public Color originalColor = Color.yellow;
     private new MeshRenderer renderer;
-    private new Rigidbody rigidbody;
+    public new Rigidbody rigidbody;
 
     public bool hovered;
     public bool highlighted;
+    public GameObject highlight;
     public bool dragged;
-    public float target_height = 3.5f;
 
     private void Start()
     {
         renderer = GetComponent<MeshRenderer>();
         rigidbody = GetComponent<Rigidbody>();
-        renderer.material.color = originalColor;
     }
 
     void OnMouseEnter()
     {
         hovered = true;
+        DragSystem.instance.OnHover(this, true);
     }
 
     void OnMouseExit()
     {
         hovered = false;
+        DragSystem.instance.OnHover(this, false);
     }
 
-    private void FixedUpdate()
-    {
-        if (dragged)
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            Plane plane = new Plane(Vector3.up, target_height);
-            plane.Raycast(ray, out float enter);
-            Vector3 target_point = ray.GetPoint(enter);
-            Vector3 offset = (target_point - transform.position);
-            Vector3 attraction_force = DragSystem.instance.GetAttractionStrength(offset);
-
-            rigidbody.AddForce(attraction_force, ForceMode.Acceleration);
-            if (Vector3.Dot(rigidbody.velocity, offset) < 0)
-                rigidbody.velocity *= DragSystem.instance.damping;
-            /*if(rigidbody.velocity.magnitude * Time.fixedDeltaTime > offset.magnitude)
-            {
-                rigidbody.velocity = offset / Time.fixedDeltaTime;
-            }*/
-        }
-    }
     void Update()
     {
-        if(dragged)
+        if(hovered && !highlighted)
         {
-            renderer.material.color = mouseOverColor;
+            DragSystem.instance.OnHover(this, true);
         }
-        else if(hovered)
-        {
-            if(DragSystem.instance.IsPointerOverUIElement())
-                renderer.material.color = originalColor;
-            else 
-                renderer.material.color = mouseOverColor;
-        }
-        else 
-            renderer.material.color = originalColor;
+        highlight.SetActive(highlighted);
     }
     static List<RaycastResult> GetEventSystemRaycastResults()
     {
