@@ -1720,8 +1720,8 @@ RectTransform:
   m_GameObject: {fileID: 1140952759}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.03, y: 1.03, z: 1.03}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1257706752}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1751,7 +1751,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: adccad1e4e8151242800a9a9ea4b4753, type: 3}
-  m_Type: 0
+  m_Type: 1
   m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
@@ -3591,8 +3591,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 10, y: 10, z: 10}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 10.5, y: 5.90625, z: 6.5625}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
@@ -3752,6 +3752,26 @@ PrefabInstance:
     - target: {fileID: 4770193381654211633, guid: cd37b41352af7664f8682ef2073c209b, type: 3}
       propertyPath: m_Name
       value: Machine Widget
+      objectReference: {fileID: 0}
+    - target: {fileID: 5882217397052437397, guid: cd37b41352af7664f8682ef2073c209b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6173677426476593076, guid: cd37b41352af7664f8682ef2073c209b, type: 3}
+      propertyPath: m_fontColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6173677426476593076, guid: cd37b41352af7664f8682ef2073c209b, type: 3}
+      propertyPath: m_fontColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6173677426476593076, guid: cd37b41352af7664f8682ef2073c209b, type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6173677426476593076, guid: cd37b41352af7664f8682ef2073c209b, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 6494999570924603855, guid: cd37b41352af7664f8682ef2073c209b, type: 3}
       propertyPath: m_Pivot.x
