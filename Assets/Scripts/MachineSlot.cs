@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class MachineSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class MachineSlot : MonoBehaviour
 {
     public MachineRoot root;
     public System.Action<Draggable> eat_element_delegate;
@@ -15,29 +15,23 @@ public class MachineSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public System.Action eat_coroutine;
     public delegate Vector3 PositionDelegate();
     public delegate float ScaleDelegate();
-    public PositionDelegate drag_position_delegate;
-    public ScaleDelegate drag_scale_delegate;
+    private DragSlot slot;
 
     private void Awake()
     {
-        drag_position_delegate = () => { return transform.position; };
-        drag_scale_delegate = () => { return 1; };
+        slot = GetComponent<DragSlot>();
+        slot.drag_position_delegate = (Draggable draggable) => { return transform.position;  };
+        slot.drag_scale_delegate = (Draggable draggable) => { return 1; };
+        slot.drop_delegate = (Draggable draggable) => {
+            StartCoroutine(EatCoroutine(draggable));
+        };
     }
 
     private void Start()
     {
         root = GetComponentInParent<MachineRoot>();
         DragSystem.instance.drag_start_delegate += (Draggable draggable) => { on_target = false; };
-    }
-
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        DragSystem.instance.SetHoveredSlot(this);
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        DragSystem.instance.UnhoverSlot(this);
+        GetComponent<DragSlot>().can_drag_delegate += CanDrop;
     }
 
     public bool CanDrop(Draggable draggable)
@@ -51,16 +45,6 @@ public class MachineSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         StartCoroutine(EatCoroutine(draggable));
     }
 
-    public void OnDraggingHover(Draggable draggable)
-    {
-        draggable.AttachToSlot(this);
-    }
-
-    public void EatDraggable(Draggable draggable)
-    {
-        StartCoroutine(EatCoroutine(draggable));
-    }
-
     private IEnumerator EatCoroutine(Draggable draggable)
     {
         while (!draggable.attach_animation_finished)
@@ -68,7 +52,7 @@ public class MachineSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         eat_coroutine?.Invoke();
         ResourceConfig resource = draggable.GetComponent<ResourceItem>().resource;
         root.resource_received_delegate?.Invoke(resource);
-        yield return draggable.AttachToSlotCoroutine(this, 0);
+        yield return draggable.AttachToSlotCoroutine(slot, 0);
         Destroy(draggable.gameObject);
     }
 }

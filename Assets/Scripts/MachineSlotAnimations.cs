@@ -25,7 +25,7 @@ public class MachineSlotAnimations : MonoBehaviour, IPointerEnterHandler, IPoint
             animator.SetTrigger("Produce");
         };
         DragSystem.instance.release_drag_delegate += OnDragEnd;
-        DragSystem.instance.drop_delegate += (Draggable draggable, MachineSlot slot) => { OnDragEnd(draggable); };
+        DragSystem.instance.drop_delegate += (Draggable draggable, DragSlot slot) => { OnDragEnd(draggable); };
     }
 
     public void OnPointerEnter(PointerEventData eventData)
