@@ -52,7 +52,7 @@ public class MachineSlot : MonoBehaviour
         eat_coroutine?.Invoke();
         ResourceConfig resource = draggable.GetComponent<ResourceItem>().resource;
         root.resource_received_delegate?.Invoke(resource);
-        yield return draggable.AttachToSlotCoroutine(slot, 0);
+        yield return draggable.GoToSlotCoroutine(slot, 0);
         Destroy(draggable.gameObject);
     }
 }

@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 7887811803056004649}
   - component: {fileID: 7836393549899236148}
   m_Layer: 0
-  m_Name: Refined Metal Resource
+  m_Name: Water Bottle Resource
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -65,7 +65,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: d0ec86f5ab4d5854eb3ef19e6d1c6a76, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -165,4 +165,9 @@ MonoBehaviour:
   rigidbody: {fileID: 0}
   hovered: 0
   highlighted: 0
+  highlight: {fileID: 0}
   dragged: 0
+  attach_animation_duration: 0.3
+  attached_slot: {fileID: 0}
+  attach_animation_finished: 0
+  draggable_through_ui: 0
