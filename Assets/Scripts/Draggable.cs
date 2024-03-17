@@ -17,8 +17,9 @@ public class Draggable : MonoBehaviour
     public bool dragged;
 
     public float attach_animation_duration = 0.3f;
-    public MachineSlot attached_slot;
+    public DragSlot attached_slot;
     public bool attach_animation_finished = false;
+    public bool draggable_through_ui = false;
 
     private void Start()
     {
@@ -55,20 +56,21 @@ public class Draggable : MonoBehaviour
         return raysastResults;
     }
 
-    public void AttachToSlot(MachineSlot slot)
+    public void AttachToSlot(DragSlot slot)
     {
         StopAllCoroutines();
         attached_slot = slot;
         StartCoroutine(AttachToSlotCoroutine(slot, 1));
     }
 
-    public void ReleaseFromSlot(MachineSlot slot)
+    public void ReleaseFromSlot(DragSlot slot)
     {
         attached_slot = null;
         StopAllCoroutines();
+        StartCoroutine(ReleaseFromSlotCoroutine());
     }
 
-    public IEnumerator AttachToSlotCoroutine(MachineSlot slot, float target_scale)
+    public IEnumerator GoToSlotCoroutine(DragSlot slot, float target_scale_multiplier)
     {
         attach_animation_finished = false;
         Vector3 start_position = transform.position;
@@ -76,15 +78,43 @@ public class Draggable : MonoBehaviour
         
         for(float time=0; time < attach_animation_duration; time += Time.deltaTime)
         {
-
-            transform.position = Vector3.Lerp(start_position, slot.transform.position, time / attach_animation_duration);
+            Vector3 target_position = slot.drag_position_delegate.Invoke(this);
+            float target_scale = slot.drag_scale_delegate.Invoke(this) * target_scale_multiplier;
+            transform.position = Vector3.Lerp(start_position, target_position, time / attach_animation_duration);
             transform.localScale = Vector3.Lerp(start_scale, Vector3.one * target_scale, time / attach_animation_duration);
             yield return null;
         }
         attach_animation_finished = true;
+
+    }
+
+    public IEnumerator AttachToSlotCoroutine(DragSlot slot, float target_scale_multiplier)
+    {
+        yield return GoToSlotCoroutine(slot, target_scale_multiplier);
         while(true)
         {
-            transform.position = slot.drag_position_delegate.Invoke();
+            transform.position = slot.drag_position_delegate.Invoke(this);
+            float target_scale = slot.drag_scale_delegate.Invoke(this) * target_scale_multiplier;
+            transform.localScale = Vector3.one * target_scale;
+            yield return null;
+
+        }
+    }
+    public IEnumerator ReleaseFromSlotCoroutine()
+    {
+        attach_animation_finished = false;
+        Vector3 start_scale = transform.localScale;
+        
+        for(float time=0; time < attach_animation_duration; time += Time.deltaTime)
+        {
+            float target_scale = 1;
+            transform.localScale = Vector3.Lerp(start_scale, Vector3.one * target_scale, time / attach_animation_duration);
+            yield return null;
+        }
+        while(true)
+        {
+            float target_scale = 1;
+            transform.localScale = Vector3.one * target_scale;
             yield return null;
 
         }

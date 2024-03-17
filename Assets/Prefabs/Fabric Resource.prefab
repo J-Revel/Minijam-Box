@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 5612902352885082911}
   - component: {fileID: 7887811803056004649}
   - component: {fileID: 6993962324514968276}
-  - component: {fileID: 3793517518925584618}
+  - component: {fileID: 7097708680015032971}
   m_Layer: 0
-  m_Name: Scrap Metal Resource
+  m_Name: Fabric Resource
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45,7 +45,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5019505614510065813}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 4579454407841743219, guid: 0c2b0f5badb2e1742b161397dcf29586, type: 3}
 --- !u!23 &1471932393629190063
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -147,8 +147,12 @@ MonoBehaviour:
   highlighted: 0
   highlight: {fileID: 6151343763761433117}
   dragged: 0
---- !u!135 &3793517518925584618
-SphereCollider:
+  attach_animation_duration: 0.3
+  attached_slot: {fileID: 0}
+  attach_animation_finished: 0
+  draggable_through_ui: 0
+--- !u!64 &7097708680015032971
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -165,9 +169,10 @@ SphereCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4579454407841743219, guid: 0c2b0f5badb2e1742b161397dcf29586, type: 3}
 --- !u!1 &6151343763761433117
 GameObject:
   m_ObjectHideFlags: 0
@@ -208,7 +213,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6151343763761433117}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 4579454407841743219, guid: 0c2b0f5badb2e1742b161397dcf29586, type: 3}
 --- !u!23 &4190729441603606066
 MeshRenderer:
   m_ObjectHideFlags: 0

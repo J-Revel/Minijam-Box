@@ -8,7 +8,7 @@ public class DragSystem : MonoBehaviour
 {
     public static DragSystem instance;
     public System.Action<Draggable> drag_start_delegate;
-    public System.Action<Draggable, MachineSlot> drop_delegate;
+    public System.Action<Draggable, DragSlot> drop_delegate;
     public System.Action<Draggable> release_drag_delegate;
 
     private void Awake()
@@ -25,9 +25,11 @@ public class DragSystem : MonoBehaviour
     public float damping = 0.1f;
 
     private Draggable hovered_draggable;
-    private bool dragging = false;
+    public bool dragging = false;
     public Transform debug_cursor;
-    private MachineSlot hovered_slot;
+    private DragSlot hovered_slot;
+
+    public Draggable dragged_element { get { return dragging ? hovered_draggable : null; } }
 
     public void Start()
     {
@@ -55,7 +57,7 @@ public class DragSystem : MonoBehaviour
 
     private void Update()
     {
-        if(!dragging && Input.GetMouseButtonDown(0) && !IsPointerOverUIElement() && hovered_draggable != null)
+        if(!dragging && Input.GetMouseButtonDown(0) && hovered_draggable != null && (!IsPointerOverUIElement() || hovered_draggable.draggable_through_ui))
         {
             hovered_draggable.dragged = true;
             dragging = true;
@@ -125,26 +127,21 @@ public class DragSystem : MonoBehaviour
         return false;
     }
 
-    public void SetHoveredSlot(MachineSlot slot)
+    public void SetHoveredSlot(DragSlot slot)
     {
-        if(dragging && slot.root.DoesAcceptResource(hovered_draggable.GetComponent<ResourceItem>().resource))
+        if(dragging && slot.can_drag_delegate(hovered_draggable))
         {
             hovered_slot = slot;
-            hovered_slot.OnDraggingHover(hovered_draggable);
+            hovered_slot.OnDraggingHoverStart(hovered_draggable);
         }
     }
 
-    public void UnhoverSlot(MachineSlot slot)
+    public void UnhoverSlot(DragSlot slot)
     {
-        if(hovered_slot == slot)
+        if(dragging)
         {
-            if(dragging)
-            {
-                hovered_slot.StopAllCoroutines();
-                hovered_draggable.ReleaseFromSlot(hovered_slot);
-            }
-            hovered_slot = null;
-
+            slot.OnDraggingHoverEnd(hovered_draggable);
         }
+        hovered_slot = null;
     }
 }
