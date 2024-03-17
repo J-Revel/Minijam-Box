@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -12,6 +13,16 @@ public class MachineSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public float eat_anim_duration = 0.3f;
     public bool on_target = false;
     public System.Action eat_coroutine;
+    public delegate Vector3 PositionDelegate();
+    public delegate float ScaleDelegate();
+    public PositionDelegate drag_position_delegate;
+    public ScaleDelegate drag_scale_delegate;
+
+    private void Awake()
+    {
+        drag_position_delegate = () => { return transform.position; };
+        drag_scale_delegate = () => { return 1; };
+    }
 
     private void Start()
     {
@@ -55,14 +66,9 @@ public class MachineSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         while (!draggable.attach_animation_finished)
             yield return null;
         eat_coroutine?.Invoke();
-        /*
-        drop_coroutines.Clear();
-        collect_drop_coroutines_delegate?.Invoke();
-        foreach (IEnumerator coroutine in drop_coroutines)
-            yield return coroutine;*/
         ResourceConfig resource = draggable.GetComponent<ResourceItem>().resource;
         root.resource_received_delegate?.Invoke(resource);
-        yield return draggable.AttachToSlotCoroutine(transform.position, 0);
+        yield return draggable.AttachToSlotCoroutine(this, 0);
         Destroy(draggable.gameObject);
     }
 }
