@@ -91,13 +91,22 @@ public class Draggable : MonoBehaviour
     public IEnumerator AttachToSlotCoroutine(DragSlot slot, float target_scale_multiplier)
     {
         yield return GoToSlotCoroutine(slot, target_scale_multiplier);
+        yield return FixToSlotCoroutine(slot, target_scale_multiplier);
+    }
+
+    public void FixToSlot(DragSlot slot, float scale_multiplier)
+    {
+        StartCoroutine(FixToSlotCoroutine(slot, scale_multiplier));
+    }
+
+    public IEnumerator FixToSlotCoroutine(DragSlot slot, float target_scale_multiplier)
+    {
         while(true)
         {
             transform.position = slot.drag_position_delegate.Invoke(this);
             float target_scale = slot.drag_scale_delegate.Invoke(this) * target_scale_multiplier;
             transform.localScale = Vector3.one * target_scale;
             yield return null;
-
         }
     }
     public IEnumerator ReleaseFromSlotCoroutine()
