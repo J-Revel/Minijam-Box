@@ -59,7 +59,7 @@ public class Draggable : MonoBehaviour
     {
         StopAllCoroutines();
         attached_slot = slot;
-        StartCoroutine(AttachToSlotCoroutine(slot.transform.position, 1));
+        StartCoroutine(AttachToSlotCoroutine(slot, 1));
     }
 
     public void ReleaseFromSlot(MachineSlot slot)
@@ -68,21 +68,23 @@ public class Draggable : MonoBehaviour
         StopAllCoroutines();
     }
 
-    public IEnumerator AttachToSlotCoroutine(Vector3 target_position, float target_scale)
+    public IEnumerator AttachToSlotCoroutine(MachineSlot slot, float target_scale)
     {
         attach_animation_finished = false;
         Vector3 start_position = transform.position;
         Vector3 start_scale = transform.localScale;
+        
         for(float time=0; time < attach_animation_duration; time += Time.deltaTime)
         {
-            transform.position = Vector3.Lerp(start_position, target_position, time / attach_animation_duration);
+
+            transform.position = Vector3.Lerp(start_position, slot.transform.position, time / attach_animation_duration);
             transform.localScale = Vector3.Lerp(start_scale, Vector3.one * target_scale, time / attach_animation_duration);
             yield return null;
         }
         attach_animation_finished = true;
         while(true)
         {
-            transform.position = target_position;
+            transform.position = slot.drag_position_delegate.Invoke();
             yield return null;
 
         }

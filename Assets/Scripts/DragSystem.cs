@@ -141,6 +141,7 @@ public class DragSystem : MonoBehaviour
             if(dragging)
             {
                 hovered_slot.StopAllCoroutines();
+                hovered_draggable.ReleaseFromSlot(hovered_slot);
             }
             hovered_slot = null;
 
