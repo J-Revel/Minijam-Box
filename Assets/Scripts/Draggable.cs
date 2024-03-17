@@ -70,7 +70,7 @@ public class Draggable : MonoBehaviour
         StartCoroutine(ReleaseFromSlotCoroutine());
     }
 
-    public IEnumerator AttachToSlotCoroutine(DragSlot slot, float target_scale_multiplier)
+    public IEnumerator GoToSlotCoroutine(DragSlot slot, float target_scale_multiplier)
     {
         attach_animation_finished = false;
         Vector3 start_position = transform.position;
@@ -85,6 +85,12 @@ public class Draggable : MonoBehaviour
             yield return null;
         }
         attach_animation_finished = true;
+
+    }
+
+    public IEnumerator AttachToSlotCoroutine(DragSlot slot, float target_scale_multiplier)
+    {
+        yield return GoToSlotCoroutine(slot, target_scale_multiplier);
         while(true)
         {
             transform.position = slot.drag_position_delegate.Invoke(this);
