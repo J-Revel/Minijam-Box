@@ -8,7 +8,8 @@ public class DragSystem : MonoBehaviour
 {
     public static DragSystem instance;
     public System.Action<Draggable> drag_start_delegate;
-    public System.Action<Draggable> drag_end_delegate;
+    public System.Action<Draggable, MachineSlot> drop_delegate;
+    public System.Action<Draggable> release_drag_delegate;
 
     private void Awake()
     {
@@ -26,7 +27,7 @@ public class DragSystem : MonoBehaviour
     private Draggable hovered_draggable;
     private bool dragging = false;
     public Transform debug_cursor;
-    public MachineSlot hovered_slot;
+    private MachineSlot hovered_slot;
 
     public void Start()
     {
@@ -62,11 +63,13 @@ public class DragSystem : MonoBehaviour
         }
         else if(dragging && !Input.GetMouseButton(0))
         {
-            if(hovered_slot != null)
+            if(hovered_slot != null && hovered_slot.CanDrop(hovered_draggable))
             {
-                hovered_slot.dragged_element_delegate?.Invoke(hovered_draggable);
+                drop_delegate?.Invoke(hovered_draggable, hovered_slot);
+                hovered_slot.OnDrop(hovered_draggable);
             }
-            drag_end_delegate?.Invoke(hovered_draggable);
+            else
+                release_drag_delegate?.Invoke(hovered_draggable);
             dragging = false;
             hovered_draggable.rigidbody.useGravity = true;
         }
@@ -88,10 +91,6 @@ public class DragSystem : MonoBehaviour
             draggable_rigidbody.AddForce(attraction_force, ForceMode.Acceleration);
             if (Vector3.Dot(draggable_rigidbody.velocity, offset) < 0)
                 draggable_rigidbody.velocity *= damping;
-            /*if(draggable_rigidbody.velocity.magnitude * Time.fixedDeltaTime > offset.magnitude)
-            {
-                draggable_rigidbody.velocity = offset / Time.fixedDeltaTime;
-            }*/
         }
     }
 
@@ -124,5 +123,27 @@ public class DragSystem : MonoBehaviour
                 return true;
         }
         return false;
+    }
+
+    public void SetHoveredSlot(MachineSlot slot)
+    {
+        if(dragging && slot.root.DoesAcceptResource(hovered_draggable.GetComponent<ResourceItem>().resource))
+        {
+            hovered_slot = slot;
+            hovered_slot.OnDraggingHover(hovered_draggable);
+        }
+    }
+
+    public void UnhoverSlot(MachineSlot slot)
+    {
+        if(hovered_slot == slot)
+        {
+            if(dragging)
+            {
+                hovered_slot.StopAllCoroutines();
+            }
+            hovered_slot = null;
+
+        }
     }
 }

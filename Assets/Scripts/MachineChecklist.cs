@@ -25,10 +25,7 @@ public class MachineChecklist : MonoBehaviour
     {
         for (int i = 0; i < elements.Count; i++)
         {
-            if (root.stocks[i] > 0)
-            {
-                elements[i].checkbox.enabled = true;
-            }
+            elements[i].checkbox.enabled = root.stocks[i] > 0;
         }
     }
 }

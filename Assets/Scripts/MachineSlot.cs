@@ -7,74 +7,62 @@ using UnityEngine.UI;
 
 public class MachineSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    private MachineRoot root;
-    public Color hovered_color;
-    public Image hover_image;
-    public System.Action<Draggable> dragged_element_delegate;
-    public float grab_anim_duration = 1;
-    public bool open_mouth = false;
-    public Animator animator;
-    private bool eating = false;
+    public MachineRoot root;
+    public System.Action<Draggable> eat_element_delegate;
+    public float eat_anim_duration = 0.3f;
+    public bool on_target = false;
+    public System.Action eat_coroutine;
 
     private void Start()
     {
         root = GetComponentInParent<MachineRoot>();
-        dragged_element_delegate += OnElementDragged;
-        DragSystem.instance.drag_start_delegate += OnDragStart;
-        DragSystem.instance.drag_end_delegate += OnDragEnd;
+        DragSystem.instance.drag_start_delegate += (Draggable draggable) => { on_target = false; };
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        DragSystem.instance.hovered_slot = this;
-        hover_image.color = hovered_color;
+        DragSystem.instance.SetHoveredSlot(this);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        DragSystem.instance.hovered_slot = null;
-        hover_image.color = Color.white;
+        DragSystem.instance.UnhoverSlot(this);
     }
 
-    public void OnElementDragged(Draggable draggable)
+    public bool CanDrop(Draggable draggable)
     {
-        StartCoroutine(ElementDragCoroutine(draggable.transform.position, transform.position, draggable));
+        ResourceConfig resource = draggable.GetComponent<ResourceItem>().resource;
+        return root.DoesAcceptResource(resource);
     }
 
-    public IEnumerator ElementDragCoroutine(Vector3 start_position, Vector3 target_position, Draggable draggable)
+    public void OnDrop(Draggable draggable)
     {
-        open_mouth = true;
-        eating = true;
-        for (float time = 0; time < grab_anim_duration; time += Time.deltaTime)
-        {
-            draggable.transform.position = Vector3.Lerp(start_position, target_position, time / grab_anim_duration);
+        StartCoroutine(EatCoroutine(draggable));
+    }
+
+    public void OnDraggingHover(Draggable draggable)
+    {
+        draggable.AttachToSlot(this);
+    }
+
+    public void EatDraggable(Draggable draggable)
+    {
+        StartCoroutine(EatCoroutine(draggable));
+    }
+
+    private IEnumerator EatCoroutine(Draggable draggable)
+    {
+        while (!draggable.attach_animation_finished)
             yield return null;
-        }
-        eating = false;
-        animator.SetBool("Open_Mouth", false);
-        open_mouth = false;
-        for (float time = 0; time < 0.3f; time += Time.deltaTime)
-        {
-            yield return null;
-        }
-        root.resource_received_delegate?.Invoke(draggable.GetComponent<ResourceItem>().resource);
+        eat_coroutine?.Invoke();
+        /*
+        drop_coroutines.Clear();
+        collect_drop_coroutines_delegate?.Invoke();
+        foreach (IEnumerator coroutine in drop_coroutines)
+            yield return coroutine;*/
+        ResourceConfig resource = draggable.GetComponent<ResourceItem>().resource;
+        root.resource_received_delegate?.Invoke(resource);
+        yield return draggable.AttachToSlotCoroutine(transform.position, 0);
         Destroy(draggable.gameObject);
-    }
-    public void OnDragStart(Draggable draggable)
-    {
-        if(root.DoesAcceptResource(draggable.GetComponent<ResourceItem>().resource))
-        {
-            open_mouth = true;
-            animator.SetBool("Open_Mouth", true);
-        }
-    }
-
-    public void OnDragEnd(Draggable draggable)
-    {
-        if(!eating)
-        {
-            open_mouth = false;
-            animator.SetBool("Open_Mouth", false);
-        }
     }
 }

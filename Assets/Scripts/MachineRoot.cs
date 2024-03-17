@@ -5,6 +5,7 @@ using UnityEngine;
 public class MachineRoot : MonoBehaviour
 {
     public System.Action<ResourceConfig> resource_received_delegate;
+    public System.Action yield_prepare_delegate;
     public System.Action yield_delegate;
     public System.Action<ResourceConfig> reject_delegate;
     public MachineRecipeConfig config;
@@ -67,6 +68,7 @@ public class MachineRoot : MonoBehaviour
 
     private IEnumerator YieldCoroutine()
     {
+        yield_prepare_delegate?.Invoke();
         for(float time=0; time < production_duration; time += Time.deltaTime)
         {
             yield return null;
