@@ -564,6 +564,7 @@ GameObject:
   - component: {fileID: 2706288073152349375}
   - component: {fileID: 5570195728579931221}
   - component: {fileID: 6772658603483040196}
+  - component: {fileID: 7798217757284243455}
   m_Layer: 5
   m_Name: Machine Widget
   m_TagString: Untagged
@@ -708,6 +709,20 @@ MonoBehaviour:
   grab_anim_duration: 0.3
   open_mouth: 0
   animator: {fileID: 5570195728579931221}
+--- !u!114 &7798217757284243455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4770193381654211633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e80b35e832429874ea363a781e51791c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eat_anim_duration: 0.3
+  on_target: 0
 --- !u!1 &5256042240412216561
 GameObject:
   m_ObjectHideFlags: 0
