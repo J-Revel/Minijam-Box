@@ -721,7 +721,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -0}
   m_LocalScale: {x: 1.03, y: 1.03, z: 1.03}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1257706752}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -859,6 +859,30 @@ PrefabInstance:
     - target: {fileID: 3678649722140400845, guid: 0209b62716a44274992eb345b7949e01, type: 3}
       propertyPath: m_Name
       value: Score Panel
+      objectReference: {fileID: 0}
+    - target: {fileID: 7677838479630855589, guid: 0209b62716a44274992eb345b7949e01, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7677838479630855589, guid: 0209b62716a44274992eb345b7949e01, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.99987936
+      objectReference: {fileID: 0}
+    - target: {fileID: 7677838479630855589, guid: 0209b62716a44274992eb345b7949e01, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.015532804
+      objectReference: {fileID: 0}
+    - target: {fileID: 7677838479630855589, guid: 0209b62716a44274992eb345b7949e01, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 53
+      objectReference: {fileID: 0}
+    - target: {fileID: 7677838479630855589, guid: 0209b62716a44274992eb345b7949e01, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -18
+      objectReference: {fileID: 0}
+    - target: {fileID: 7677838479630855589, guid: 0209b62716a44274992eb345b7949e01, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 1.78
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
