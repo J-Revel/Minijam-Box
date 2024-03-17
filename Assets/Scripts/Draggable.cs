@@ -113,6 +113,7 @@ public class Draggable : MonoBehaviour
     {
         attach_animation_finished = false;
         Vector3 start_scale = transform.localScale;
+        Quaternion rotation = transform.rotation;
         
         for(float time=0; time < attach_animation_duration; time += Time.deltaTime)
         {
