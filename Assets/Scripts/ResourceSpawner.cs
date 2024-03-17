@@ -5,7 +5,7 @@ using UnityEngine;
 public class ResourceSpawner : MonoBehaviour
 {
     public Transform[] prefabs;
-    public float throw_radius = 5;
+    public BoxCollider spawn_box;
     public float throw_duration = 0.5f;
     public Vector2 throw_height_range = new Vector2(5, 8);
     public DragSlot slot;
@@ -24,7 +24,7 @@ public class ResourceSpawner : MonoBehaviour
     {
         Transform prefab = prefabs[Random.Range(0, prefabs.Length)];
         Transform instance = Instantiate(prefab, transform.position, Random.rotationUniform);
-        Vector2 throw_offset = Random.insideUnitCircle * throw_radius;
+        Vector2 throw_target = new Vector2(Random.Range(spawn_box.bounds.min.x, spawn_box.bounds.max.x), Random.Range(spawn_box.bounds.min.z, spawn_box.bounds.max.z));
         float throw_height = Random.Range(throw_height_range.x, throw_height_range.y);
         instance.position = transform.position;
         Draggable draggable = instance.GetComponent<Draggable>();
@@ -34,7 +34,7 @@ public class ResourceSpawner : MonoBehaviour
         {
             
             float f = time / throw_duration;
-            instance.position = transform.position + new Vector3(throw_offset.x * f, 0, throw_height * Mathf.Sin(f * Mathf.PI) + throw_offset.y * f);
+            instance.position = new Vector3(Mathf.Lerp(transform.position.x, throw_target.x, f), transform.position.y, Mathf.Lerp(transform.position.z, throw_target.y, f) + throw_height * Mathf.Sin(f * Mathf.PI));
             yield return null;
         }
     }

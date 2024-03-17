@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.99999946, g: 0, b: 0.99999946, a: 1}
+  m_IndirectSpecularColor: {r: 0.3564185, g: 0.28850958, b: 0.26209745, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1093,6 +1093,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -103.15
       objectReference: {fileID: 0}
+    - target: {fileID: 6299689170812381638, guid: cd37b41352af7664f8682ef2073c209b, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6494999570924603855, guid: cd37b41352af7664f8682ef2073c209b, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1172,6 +1176,10 @@ PrefabInstance:
     - target: {fileID: 6494999570924603855, guid: cd37b41352af7664f8682ef2073c209b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7670926329501058557, guid: cd37b41352af7664f8682ef2073c209b, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 47.30005
       objectReference: {fileID: 0}
     - target: {fileID: 8260246900734700702, guid: cd37b41352af7664f8682ef2073c209b, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1346,6 +1354,10 @@ PrefabInstance:
     - target: {fileID: 6494999570924603855, guid: cd37b41352af7664f8682ef2073c209b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7670926329501058557, guid: cd37b41352af7664f8682ef2073c209b, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 47.30005
       objectReference: {fileID: 0}
     - target: {fileID: 8260246900734700702, guid: cd37b41352af7664f8682ef2073c209b, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1878,7 +1890,7 @@ MonoBehaviour:
   prefabs:
   - {fileID: 2912123338921273717, guid: 7820be729369b724796b894d2bb441f9, type: 3}
   - {fileID: 2172127649554938117, guid: e5b5291af4d9a264db44b6928a56a66c, type: 3}
-  throw_radius: 3
+  spawn_box: {fileID: 2041467020}
   throw_duration: 0.5
   throw_height_range: {x: 1, y: 1.5}
   slot: {fileID: 1837277604}
@@ -2450,6 +2462,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7670926329501058557, guid: cd37b41352af7664f8682ef2073c209b, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 47.30005
+      objectReference: {fileID: 0}
     - target: {fileID: 8260246900734700702, guid: cd37b41352af7664f8682ef2073c209b, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -2856,11 +2872,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -5495902117074765545, guid: 05c6091a1ac49614c902e0a63ba00b45, type: 3}
---- !u!95 &1300508109 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 4114642777215205305, guid: cd37b41352af7664f8682ef2073c209b, type: 3}
-  m_PrefabInstance: {fileID: 699530356}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1308993507
 GameObject:
   m_ObjectHideFlags: 0
@@ -3781,7 +3792,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1300508109}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
           m_MethodName: SetTrigger
           m_Mode: 5
@@ -4223,13 +4234,70 @@ Transform:
   m_GameObject: {fileID: 2034520950}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -328, y: 851, z: -170}
+  m_LocalPosition: {x: 52, y: 826, z: -170}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 869863489}
   m_Father: {fileID: 1257706752}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2041467019
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2041467021}
+  - component: {fileID: 2041467020}
+  m_Layer: 5
+  m_Name: Boat Spawn Box
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!65 &2041467020
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2041467019}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 6.4968815, y: 2.0120609, z: 1}
+  m_Center: {x: -0.16867685, y: -0.50603056, z: -8.57011e-17}
+--- !u!224 &2041467021
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2041467019}
+  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 4.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &2041973137
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4387,8 +4455,8 @@ Transform:
   m_GameObject: {fileID: 2054512284}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0.1116, y: 0, z: -0.0021}
-  m_LocalScale: {x: 8.038658, y: 5.420924, z: 6.5625}
+  m_LocalPosition: {x: 0.0723, y: 0, z: -0.0021}
+  m_LocalScale: {x: 8.406829, y: 5.420924, z: 6.5625}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -4650,6 +4718,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7670926329501058557, guid: cd37b41352af7664f8682ef2073c209b, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 47.30005
+      objectReference: {fileID: 0}
     - target: {fileID: 9038834733517772250, guid: cd37b41352af7664f8682ef2073c209b, type: 3}
       propertyPath: target_position
       value: 
@@ -4743,6 +4815,7 @@ SceneRoots:
   - {fileID: 1352679970}
   - {fileID: 1503955670}
   - {fileID: 1513478096}
+  - {fileID: 2041467021}
   - {fileID: 1257706752}
   - {fileID: 1249048808}
   - {fileID: 2054512288}
